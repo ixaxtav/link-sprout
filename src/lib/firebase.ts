@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getStorage } from "firebase/storage";
+import { writable } from "svelte/store";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB4S-gtPVAU4Xam_VAJXn7k16dFVjsn-PU",
@@ -17,3 +18,31 @@ export const app = initializeApp(firebaseConfig);
 export const db = getFirestore();
 export const auth = getAuth();
 export const storage = getStorage();
+
+function userStore() {
+  let unsubscribe: () => void;
+
+  if (!auth || !globalThis.window) {
+    console.warn("auth or window not available");
+
+    const { subscribe } = writable(null);
+
+    return {
+      subscribe,
+    };
+  }
+
+  const { subscribe } = writable(auth?.currentUser ?? null, (set) => {
+    unsubscribe = onAuthStateChanged(auth, (user) => {
+      set(user);
+    });
+
+    return () => unsubscribe();
+  });
+
+  return {
+    subscribe,
+  };
+}
+
+export const user = userStore();
