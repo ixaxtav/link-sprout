@@ -33,6 +33,7 @@
 
     async function confirmUsername(){
         console.log("confirming username", username)
+        console.log("users", $user)
         const batch = writeBatch(db);
         batch.set(doc(db, "usernames", username), { uid: $user?.uid });
         batch.set(doc(db, "users", $user!.uid), {

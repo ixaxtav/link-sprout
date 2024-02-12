@@ -2,7 +2,7 @@ import { adminAuth } from "$lib/server/admin";
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 
-export const POST: RequestHandler = async (request, cookies) => {
+export const POST: RequestHandler = async ({ request, cookies }) => {
   const { idToken } = await request.json();
   const expiresIn = 60 * 60 * 24 * 5 * 1000;
   const decodedIdToken = await adminAuth.verifyIdToken(idToken);
@@ -19,7 +19,7 @@ export const POST: RequestHandler = async (request, cookies) => {
   }
 };
 
-export const DELETE: RequestHandler = async (cookies) => {
+export const DELETE: RequestHandler = async ({ cookies }) => {
   cookies.delete("__session", { path: "/" });
   return json({ status: "signedOut" });
 };

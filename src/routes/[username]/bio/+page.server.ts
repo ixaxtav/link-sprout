@@ -1,46 +1,49 @@
 import type { PageServerLoad } from "./$types";
-import { adminAuth, adminDB } from "$lib/server/admin";}
-import {error, fail} from "@sveltejs/kit"
-import { collection } from 'firebase/firestore';
+import { adminDb } from "$lib/server/admin";
+import { error, fail, type Actions } from "@sveltejs/kit";
 
-export const load = (async ({locals, params}) => {
+export const load = (async ({ locals, params }) => {
   const uid = locals.userID;
 
-  if(!uid){
-    throw error(401, "You must be logged in to view this page!")
+  if (!uid) {
+    throw error(401, "You must be logged in to view this page!");
   }
 
-  const userDoc = await adminDB.collection("users").doc(uid!).get();
+  const userDoc = await adminDb.collection("users").doc(uid!).get();
   const { username, bio } = userDoc.data()!;
 
-  if(params.username !== username){
-    throw error(401, "That username does not belong to you!")
+  if (params.username !== username) {
+    throw error(401, "That username does not belong to you!");
   }
-  
+
   return {
     bio,
-  }
+  };
 }) satisfies PageServerLoad;
 
 export const actions = {
-  default: async({locals, request, params}) => {
+  default: async ({ locals, request, params }) => {
     const uid = locals.userID;
     const data = await request.formData();
-    const bio = data.get('bio')
+    const bio = data.get("bio");
 
-    const userRef = adminDB.collections("users").doc(uid!);
-    const {username} = (await userRef.get()).data()!;
-
-    if(params.username !== username){
-      throw error(401, "That username does not belong to you!")
+    if (typeof bio !== "string") {
+      throw error(400, "Bio must be a string!");
     }
 
-    if(bio!.length > 260){
-      return fail(400, {problem: "Bio must be less than 260 characters!"})
+    const userRef = adminDb.collection("users").doc(uid!);
+    const { username } = (await userRef.get()).data()!;
+
+    if (params.username !== username) {
+      throw error(401, "That username does not belong to you!");
     }
 
-    await userRef.uopdate({
+    if (bio.length > 260) {
+      return fail(400, { problem: "Bio must be less than 260 characters!" });
+    }
+
+    await userRef.update({
       bio,
-    })
-  }
+    });
+  },
 } satisfies Actions;

@@ -21,6 +21,7 @@
 
         uploading = false;
     }
+    console.log($userData);
 </script>
 
 <AuthCheck>
@@ -50,4 +51,5 @@
             {/if}
         </div>
     </form>
+    <a href={`/${$userData?.username}/edit`} class="btn btn-primary">Finish</a>
 </AuthCheck>
