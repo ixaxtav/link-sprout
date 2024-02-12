@@ -1,6 +1,6 @@
 <script lang="ts">
     import { auth, user } from '$lib/firebase';
-    import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+    import { GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut } from 'firebase/auth';
 
     async function signInWithGoogle() {
         const provider = new GoogleAuthProvider();
@@ -11,6 +11,14 @@
             console.error(error);
         }
     } 
+
+    async function signOut() {
+        try {
+            await firebaseSignOut(auth);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 </script>
 
 <h2>Login</h2>
