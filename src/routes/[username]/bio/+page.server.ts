@@ -4,12 +4,11 @@ import { error, fail, type Actions } from "@sveltejs/kit";
 
 export const load = (async ({ locals, params }) => {
   const uid = locals.userID;
-
   if (!uid) {
     throw error(401, "You must be logged in to view this page!");
   }
 
-  const userDoc = await adminDb.collection("users").doc(uid!).get();
+  const userDoc = await adminDb.collection("users").doc(uid).get();
   const { username, bio } = userDoc.data()!;
 
   if (params.username !== username) {

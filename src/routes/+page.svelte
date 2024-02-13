@@ -4,8 +4,10 @@
             <div class="w-full">
                 <h1 class="text-7xl font-bold">🌱 Link Sprout</h1>
                 <p class="py-6 text-2xl">Unify your professional portfolio with a single link</p>
-                <a href="/login" class="btn btn-primary">Get Started</a>
-                <a href="/ixax-tavarez" class="btn btn-secondary">Example Profile</a>
+                <div class="flex gap-4 justify-center">
+                    <a href="/login" class="btn btn-primary">Get Started</a>
+                    <a href="/ixaxtav" class="btn btn-secondary">Example Profile</a>
+                </div>
             </div>
         </div>
     </div>
