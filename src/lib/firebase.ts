@@ -53,7 +53,7 @@ export function docStore<T>(path: string) {
   const docRef = doc(db, path);
 
   const { subscribe } = writable<T | null>(null, (set) => {
-    onSnapshot(docRef, (snapshot: any) => {
+    unsubscribe = onSnapshot(docRef, (snapshot: any) => {
       set((snapshot.data() as T) ?? null);
     });
     return () => unsubscribe();
