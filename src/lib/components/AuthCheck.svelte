@@ -5,7 +5,7 @@
 {#if $user}
     <slot />
 {:else}
-    <div class="flex flex-col items-center justify-center">
+    <div class="flex flex-col items-center justify-center mt-4">
         <div class="card w-96 bg-neutral text-neutral-content">
             <div class="card-body items-center text-center">
               <h2 class="card-title">

@@ -14,8 +14,7 @@
         }
     }
 </script>
-
-<AuthCheck>
+  {#if $user}
   <div class="navbar bg-base-100">
     <div class="navbar-start">
       <div class="dropdown">
@@ -42,8 +41,7 @@
       <a class="btn" href="/" on:click={signOutSSR}>Sign Out</a>
     </div>
   </div>
-
+  {/if}
   <div class="min-h-screen flex flex-col">
       <slot/>
   </div>
-</AuthCheck>

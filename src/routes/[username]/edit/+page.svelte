@@ -3,7 +3,7 @@
   import SortableList from "$lib/components/SortableList.svelte";
   import UserLink from "$lib/components/UserLink.svelte";
   import { db, user, userData } from "$lib/firebase";
-  import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
+  import { arrayRemove, arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
   import { writable } from "svelte/store";
 
   const formDefaults = {
@@ -44,29 +44,29 @@
       })
     }
 
+   
+
     function sortList(e: CustomEvent){
       const newList = e.detail;
       const userRef = doc(db, "users", $user!.uid);
       setDoc(userRef, {link: newList}, {merge:true})
-    
     }
+
+    console.log($userData?.links)
 </script>
 
 
 <h1 class="text-center mt-6 mb-2 font-bold text-xl">Edit your Profile</h1>
-<p class="text-center">Profile Link: <a class="underline" href={$page.url.origin + "/" + $userData?.username}>
+<p class="text-center">Profile Link: <a class="underline text-lime-400" href={$page.url.origin + "/" + $userData?.username}>
   {$page.url.origin + "/" + $userData?.username}
 </a></p>
 
 <main class="w-full md:w-4/6 mx-auto">
-
-  
   <SortableList list={$userData?.links} on:sort={sortList} let:item>
     <div class="group relative">
       <UserLink {...item} />
     </div>
   </SortableList>
-  
   {#if showForm}
   <form on:submit|preventDefault={addLink} class="mt-6">
       <select name="icon" class="select select-bordered w-32" bind:value={$formData.icon}>

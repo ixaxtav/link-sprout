@@ -44,8 +44,8 @@
             links: [
                 {
                     title: "Test Link",
-                    url: "https://kung.foo",
-                    icon: "🐉",
+                    url: "https://google.com",
+                    icon: "custom",
                 }
             ]
         });
