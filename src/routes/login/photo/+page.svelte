@@ -21,7 +21,6 @@
 
         uploading = false;
     }
-    console.log($userData);
 </script>
 
 <AuthCheck>

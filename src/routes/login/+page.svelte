@@ -15,6 +15,7 @@
                 },
                 body: JSON.stringify({ idToken }),
             });
+
         } catch (error) {
             console.error(error);
         }

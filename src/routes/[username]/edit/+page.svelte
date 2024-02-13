@@ -52,7 +52,6 @@
       setDoc(userRef, {link: newList}, {merge:true})
     }
 
-    console.log($userData?.links)
 </script>
 
 
@@ -61,7 +60,7 @@
   {$page.url.origin + "/" + $userData?.username}
 </a></p>
 
-<main class="w-full md:w-4/6 mx-auto">
+<main class="w-full md:w-4/6 mx-auto max-w-[800px]">
   <SortableList list={$userData?.links} on:sort={sortList} let:item>
     <div class="group relative">
       <UserLink {...item} />

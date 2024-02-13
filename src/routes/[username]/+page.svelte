@@ -2,7 +2,6 @@
     import UserLink from '$lib/components/UserLink.svelte';
     import type { PageData } from './$types';
     export let data: PageData;
-    console.log(data)
 </script>
 
 <svelte:head>
@@ -13,7 +12,7 @@
 
 
 <div class="mb-12 pb-12">
-    <main class="text-center mx-auto mt-8 w-full md:w-4/6 ">
+    <main class="text-center mx-auto mt-8 w-full md:w-4/6 max-w-[800px]">
         <h1 class="text-3xl lg:text-3xl text-purple-500 mb-4">
             @{data.username}
         </h1>

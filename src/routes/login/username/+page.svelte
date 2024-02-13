@@ -32,8 +32,7 @@
     }
 
     async function confirmUsername(){
-        console.log("confirming username", username)
-        console.log("users", $user)
+     
         const batch = writeBatch(db);
         batch.set(doc(db, "usernames", username), { uid: $user?.uid });
         batch.set(doc(db, "users", $user!.uid), {
@@ -65,15 +64,21 @@
         <a class="btn btn-primary" href="/login/photo">Upload Profile Image</a>
     {:else}
         <form class="w-2/5" on:submit|preventDefault={confirmUsername}>
-            <input type="text" placeholder="Username" class="input w-full" 
+            <input type="text" placeholder="Username" class="input w-full mb-4" 
             bind:value={username} 
             on:input={checkAvailability}
             class:input-error={!isValid && isTouched}
             class:input-warning={isTaken}
             class:input-success={isAvailable && isValid && !loading}
             />
-            <p>Is available? {isAvailable}</p>
-            <button class="btn btn-success">Confirm username @{username}</button>
+            {#if loading}
+                <p class="text-sm text-lime-500">Checking...</p>
+            {/if}
+
+            {#if !isValid && isTouched}
+                <p class="text-sm text-red-500">Username is taken</p>
+            {/if}
+            <button class="btn btn-success mt-6">Confirm username @{username}</button>
         </form>
     {/if}
 </AuthCheck>

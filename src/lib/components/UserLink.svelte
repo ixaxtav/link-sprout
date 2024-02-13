@@ -30,8 +30,7 @@
 <div class='flex items-center gap-4'>
     <a href={url} class="stack text-center bg-base-300 flex justify-center items-center p-4 rounded-lg not-prose w-full no-underline">
         <img src={`/${icon}.png`} alt={icon} class="w-8 h-8"/>
-        <span class="text-lg text-white font-bold">{title}</span>
-        <span>{id}</span>
+        <span class="text-lg text-white font-bold text-center">{title}</span>
     </a>
     <button class="btn btn-error" on:click={() => deleteLink(id)}>
         Delete
